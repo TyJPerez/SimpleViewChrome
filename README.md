@@ -18,13 +18,9 @@ every script and tracker from the original page is removed.
 
 <!-- Visual examples — replace the placeholders below with real screenshots/GIFs. -->
 
-| Before | After |
-|---|---|
-| ![Original page with ads](assets/before.png) | ![SimpleView reading view](assets/after.png) |
-
-*Light, dark, and sepia themes:*
-
-![Theme comparison](assets/themes.gif)
+| Before | After | Light, dark & sepia themes |
+|---|---|---|
+| ![Original page with ads](assets/before.png) | ![SimpleView reading view](assets/after.png) | ![Theme comparison](assets/themes.gif) |
 
 ---
 
