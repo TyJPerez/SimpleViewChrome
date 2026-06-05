@@ -1,0 +1,21 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+
+# Node (none used today; guard against future tooling)
+node_modules/
+
+# Packaging artifacts
+*.zip
+*.crx
+*.pem
+
+# Local scratch
+*.log
+tmp/
+

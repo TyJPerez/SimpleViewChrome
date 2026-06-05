@@ -1,0 +1,191 @@
+/* SimpleView — options page styles.
+   Uses the STYLE_GUIDE §1 LIGHT theme tokens for the page itself (§5). */
+
+:root {
+  --sv-bg: #FAF9F6;
+  --sv-bg-raised: #F1EFEA;
+  --sv-text: #1A1A18;
+  --sv-text-secondary: #6B6960;
+  --sv-link: #1F5DA0;
+  --sv-border: #E2E0D9;
+  --sv-accent: #2F6B4F;
+
+  --sv-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --sv-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--sv-bg);
+  color: var(--sv-text);
+}
+
+body {
+  font-family: var(--sv-font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 32px;
+}
+
+/* ---- Sections ---- */
+.section {
+  margin: 0;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sv-text-secondary);
+  margin: 0 0 16px;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--sv-border);
+  margin: 32px 0;
+}
+
+.helper {
+  font-size: 13px;
+  color: var(--sv-text-secondary);
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.helper code {
+  font-family: var(--sv-font-mono);
+  font-size: 12px;
+  background: var(--sv-bg-raised);
+  border: 1px solid var(--sv-border);
+  border-radius: 2px;
+  padding: 1px 5px;
+}
+
+/* ---- Fields ---- */
+.field {
+  margin: 0 0 20px;
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.field-label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.radio-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* option (label wrapping a radio/checkbox) */
+.opt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.opt input {
+  accent-color: var(--sv-accent);
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex: none;
+}
+
+.opt span {
+  user-select: none;
+}
+
+/* ---- Slider ---- */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.slider-row input[type="range"] {
+  accent-color: var(--sv-accent);
+  flex: 1;
+  max-width: 340px;
+}
+
+.slider-value {
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  color: var(--sv-text-secondary);
+  min-width: 44px;
+}
+
+/* ---- Textarea ---- */
+.sites {
+  display: block;
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+  font-family: var(--sv-font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--sv-text);
+  background: var(--sv-bg);
+  border: 1px solid var(--sv-border);
+  border-radius: 2px;
+  padding: 12px;
+}
+
+.sites:focus {
+  outline: 2px solid var(--sv-accent);
+  outline-offset: 1px;
+  border-color: var(--sv-accent);
+}
+
+/* ---- Saved confirmation ---- */
+.saved {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: var(--sv-text-secondary);
+  background: var(--sv-bg-raised);
+  border: 1px solid var(--sv-border);
+  border-radius: 2px;
+  padding: 6px 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.saved.show {
+  opacity: 1;
+}

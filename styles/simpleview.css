@@ -1,0 +1,427 @@
+/* =========================================================================
+   SimpleView — reading-view stylesheet (injected into a shadow root)
+   Design language:
+   High-contrast minimalism, functional-brutalist backbone.
+   ========================================================================= */
+
+/* === Reset (scoped to the shadow root) === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* The host element of the shadow root. */
+:host {
+  display: block;
+}
+
+/* =========================================================================
+   === Tokens (color, per theme) ===
+   All custom properties live on .sv-container, switched by theme class.
+   ========================================================================= */
+.sv-container.sv-light {
+  --sv-bg: #FAF9F6;
+  --sv-bg-raised: #F1EFEA;
+  --sv-text: #1A1A18;
+  --sv-text-secondary: #6B6960;
+  --sv-link: #1F5DA0;
+  --sv-border: #E2E0D9;
+  --sv-accent: #2F6B4F;
+}
+
+.sv-container.sv-dark {
+  --sv-bg: #161615;
+  --sv-bg-raised: #1F1F1D;
+  --sv-text: #E8E6E0;
+  --sv-text-secondary: #A09D95;
+  --sv-link: #85AEDC;
+  --sv-border: #2E2D2A;
+  --sv-accent: #6FA88B;
+}
+
+.sv-container.sv-sepia {
+  --sv-bg: #F4ECD8;
+  --sv-bg-raised: #EBE1C9;
+  --sv-text: #433422;
+  --sv-text-secondary: #7A6A50;
+  --sv-link: #8A5A2B;
+  --sv-border: #DCCFAF;
+  --sv-accent: #2F6B4F;
+}
+
+/* =========================================================================
+   === Typography base + font stacks ===
+   All sizes derive from the base via --sv-font-scale (default 1; JS sets
+   it inline on the container).
+   ========================================================================= */
+.sv-container {
+  /* Font stacks (STYLE_GUIDE §2). */
+  --sv-font-body: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --sv-font-heading: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --sv-font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Base body size — everything else scales from this. */
+  --sv-size-base: calc(19px * var(--sv-font-scale, 1));
+
+  /* Establish all inherited properties explicitly: the container inherits
+     from the host page through the shadow boundary, so nothing is assumed. */
+  font-family: var(--sv-font-body);
+  font-size: var(--sv-size-base);
+  line-height: 1.65;
+  color: var(--sv-text);
+  background: var(--sv-bg);
+  margin: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  /* The container fills the viewport so --sv-bg covers full height behind
+     the centered column. */
+  display: block;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* =========================================================================
+   === Layout (centered measure column) ===
+   ========================================================================= */
+.sv-content {
+  /* The reading column: centered, side padding, measure from width class. */
+  max-width: 680px; /* default; overridden by width classes below */
+  margin: 0 auto;
+  padding: 48px 24px 0;
+}
+
+.sv-container.sv-width-narrow .sv-content {
+  max-width: 540px;
+}
+.sv-container.sv-width-medium .sv-content {
+  max-width: 680px;
+}
+.sv-container.sv-width-wide .sv-content {
+  max-width: 860px;
+}
+
+/* =========================================================================
+   === Headline / deck / meta (page anatomy 1–4) ===
+   ========================================================================= */
+.sv-headline {
+  font-family: var(--sv-font-heading);
+  font-size: calc(34px * var(--sv-font-scale, 1));
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sv-text);
+}
+
+/* .sv-deck: not emitted in v1 — reserved for deck/subhead support. */
+.sv-deck {
+  font-family: var(--sv-font-heading);
+  font-size: calc(21px * var(--sv-font-scale, 1));
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--sv-text-secondary);
+  margin-top: 0.5em;
+}
+
+.sv-meta {
+  font-family: var(--sv-font-heading);
+  font-size: calc(14px * var(--sv-font-scale, 1));
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--sv-text-secondary);
+  margin-top: 0.75em;
+}
+
+/* "·" separators between meta items (spans hide independently). */
+.sv-meta > * + *::before {
+  content: "·";
+  margin: 0 0.5em;
+}
+
+/* === Rule between meta row and body === */
+.sv-rule {
+  border: 0;
+  border-top: 1px solid var(--sv-border);
+  width: 100%;
+  /* 40px between meta row and body, with the rule sitting in that gap. */
+  margin: 20px 0;
+}
+
+/* =========================================================================
+   === Body content (page anatomy 5) ===
+   Styles for elements inside .sv-body.
+   ========================================================================= */
+.sv-body {
+  /* 40px between meta row and body overall (rule lives in the 20+20 gap). */
+  margin-top: 20px;
+}
+
+.sv-body p {
+  margin: 0.9em 0;
+  text-indent: 0;
+}
+
+.sv-body h2 {
+  font-family: var(--sv-font-heading);
+  font-size: calc(26px * var(--sv-font-scale, 1));
+  font-weight: 650;
+  line-height: 1.3;
+  margin: 1.2em 0 0.4em;
+  color: var(--sv-text);
+}
+
+.sv-body h3 {
+  font-family: var(--sv-font-heading);
+  font-size: calc(21px * var(--sv-font-scale, 1));
+  font-weight: 650;
+  line-height: 1.3;
+  margin: 1.1em 0 0.4em;
+  color: var(--sv-text);
+}
+
+.sv-body h4 {
+  font-family: var(--sv-font-heading);
+  font-size: calc(19px * var(--sv-font-scale, 1));
+  font-weight: 650;
+  line-height: 1.3;
+  margin: 1em 0 0.4em;
+  color: var(--sv-text);
+}
+
+.sv-body ul,
+.sv-body ol {
+  margin: 0.9em 0;
+  padding-left: 1.5em;
+}
+
+.sv-body li {
+  margin: 0.3em 0;
+}
+
+/* Images: max-width 100%, centered, 2px radius. */
+.sv-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0.9em auto;
+  border-radius: 2px;
+}
+
+.sv-body figure {
+  margin: 0.9em 0;
+}
+
+/* Captions: 14px sans, secondary, 8px top margin. */
+.sv-body figcaption {
+  font-family: var(--sv-font-heading);
+  font-size: calc(14px * var(--sv-font-scale, 1));
+  line-height: 1.5;
+  color: var(--sv-text-secondary);
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Blockquotes: 3px left border, 20px padding-left, roman (not italic). */
+.sv-body blockquote {
+  border-left: 3px solid var(--sv-border);
+  padding-left: 20px;
+  margin: 0.9em 0;
+  font-style: normal;
+  color: var(--sv-text);
+}
+
+/* Horizontal rule / divider inside body. */
+.sv-body hr {
+  border: 0;
+  border-top: 1px solid var(--sv-border);
+  width: 100%;
+  margin: 1.2em 0;
+}
+
+/* Tables: hairline borders, 8px 12px cells, bold sans header. */
+.sv-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.9em 0;
+  font-size: 0.95em;
+}
+
+.sv-body th,
+.sv-body td {
+  border: 1px solid var(--sv-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.sv-body th {
+  font-family: var(--sv-font-heading);
+  font-weight: 700;
+}
+
+/* Code: --sv-bg-raised bg, 1px border, mono 15px. */
+.sv-body pre {
+  background: var(--sv-bg-raised);
+  border: 1px solid var(--sv-border);
+  border-radius: 2px;
+  padding: 16px;
+  margin: 0.9em 0;
+  overflow-x: auto;
+  font-family: var(--sv-font-mono);
+  font-size: calc(15px * var(--sv-font-scale, 1));
+  line-height: 1.55;
+}
+
+.sv-body code {
+  font-family: var(--sv-font-mono);
+  font-size: calc(15px * var(--sv-font-scale, 1));
+}
+
+/* Inline code keeps a subtle raised background; pre>code stays flush. */
+.sv-body :not(pre) > code {
+  background: var(--sv-bg-raised);
+  border: 1px solid var(--sv-border);
+  border-radius: 2px;
+  padding: 0.1em 0.35em;
+}
+
+.sv-body pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+/* =========================================================================
+   === Components ===
+   ========================================================================= */
+
+/* --- Embed placeholder card --- */
+.sv-embed-card {
+  display: block;
+  border: 1px solid var(--sv-border);
+  background: var(--sv-bg-raised);
+  border-radius: 2px;
+  padding: 16px;
+  margin: 0.9em 0;
+  font-family: var(--sv-font-heading);
+  font-size: calc(15px * var(--sv-font-scale, 1));
+  color: var(--sv-text);
+  text-decoration: none;
+}
+
+/* --- Footer (page anatomy 6): hairline rule above, 14px sans secondary --- */
+.sv-footer {
+  border-top: 1px solid var(--sv-border);
+  margin-top: 48px;
+  padding: 16px 0 48px;
+  font-family: var(--sv-font-heading);
+  font-size: calc(14px * var(--sv-font-scale, 1));
+  line-height: 1.5;
+  color: var(--sv-text-secondary);
+}
+
+/* Toast is self-contained in render.js (own shadow host) — intentionally not styled here. */
+
+/* =========================================================================
+   === Links (STYLE_GUIDE §7) ===
+   Always underlined, offset 2px, --sv-link color, hover thickens underline,
+   NO color change on hover. No transitions anywhere else.
+   ========================================================================= */
+.sv-container a,
+.sv-body a,
+.sv-footer a {
+  color: var(--sv-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sv-container a:hover,
+.sv-body a:hover,
+.sv-footer a:hover {
+  color: var(--sv-link); /* explicitly no color change */
+  text-decoration-thickness: 2px;
+}
+
+/* Embed card is a link but must not be underlined. */
+.sv-embed-card,
+.sv-embed-card:hover {
+  text-decoration: none;
+}
+
+/* =========================================================================
+   === Preserve-original typography mode ===
+   Override body + heading font-family only; keep layout/spacing/colors.
+   Enforce a line-height floor of 1.5.
+   ========================================================================= */
+.sv-container.sv-type-original {
+  font-family: var(--sv-font-body-original, serif);
+  line-height: 1.5;
+}
+
+.sv-container.sv-type-original .sv-headline,
+.sv-container.sv-type-original .sv-deck,
+.sv-container.sv-type-original .sv-body h2,
+.sv-container.sv-type-original .sv-body h3,
+.sv-container.sv-type-original .sv-body h4 {
+  font-family: var(--sv-font-heading-original, sans-serif);
+}
+
+/* Line-height floor of 1.5 for body text in original mode. */
+.sv-container.sv-type-original .sv-body,
+.sv-container.sv-type-original .sv-body p,
+.sv-container.sv-type-original .sv-body li {
+  line-height: 1.5;
+}
+
+/* =========================================================================
+   === Small viewports ===
+   ========================================================================= */
+@media (max-width: 600px) {
+  .sv-content {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .sv-headline {
+    font-size: calc(28px * var(--sv-font-scale, 1));
+  }
+}
+
+/* =========================================================================
+   === Focus visible (keyboard) ===
+   Accent-colored ring on links and the footer link (--sv-accent is reserved
+   for focus rings per STYLE_GUIDE §1).
+   ========================================================================= */
+.sv-container a:focus-visible,
+.sv-body a:focus-visible,
+.sv-footer a:focus-visible {
+  outline: 2px solid var(--sv-accent);
+  outline-offset: 2px;
+}
+
+/* =========================================================================
+   === Print ===
+   Force light tokens regardless of theme; drop full-height fill; underline
+   links so URLs read as links on paper.
+   ========================================================================= */
+@media print {
+  .sv-container {
+    background: #fff;
+    color: #000;
+    --sv-text: #000;
+    --sv-text-secondary: #444;
+    --sv-border: #ccc;
+    min-height: auto;
+  }
+
+  .sv-container a,
+  .sv-body a,
+  .sv-footer a {
+    text-decoration: underline;
+  }
+}
