@@ -19,3 +19,4 @@ node_modules/
 *.log
 tmp/
 
+gif_source_images/

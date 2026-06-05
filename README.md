@@ -22,11 +22,9 @@ every script and tracker from the original page is removed.
 |---|---|
 | ![Original page with ads](assets/before.png) | ![SimpleView reading view](assets/after.png) |
 
-![Toggling SimpleView on a news article](assets/toggle-demo.gif)
-
 *Light, dark, and sepia themes:*
 
-![Theme comparison](assets/themes.png)
+![Theme comparison](assets/themes.gif)
 
 ---
 
@@ -56,6 +54,9 @@ SimpleView is loaded as an unpacked extension (Chrome Web Store release TBD):
 
 Right-click the toolbar icon → **Options** (or open it from `chrome://extensions`).
 Changes save automatically and apply live — even to a reading view you already have open.
+
+<img src="assets/settings.png" alt="SimpleView settings page" width="420">
+
 
 ### Appearance
 | Setting | Choices | Default |
